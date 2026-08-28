@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ResourceQuota
 metadata:
   name: app-quota
-  namespace: praveen-test
+  namespace: sprint-prod
 spec:
   hard:
     requests.cpu: "1"

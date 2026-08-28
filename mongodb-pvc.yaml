@@ -2,7 +2,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: mongodb-data
-  namespace: praveen-test
+  namespace: sprint-prod
 spec:
   accessModes:
     - ReadWriteOnce

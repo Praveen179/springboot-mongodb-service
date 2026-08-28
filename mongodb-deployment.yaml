@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: mongodb
-  namespace: praveen-test
+  namespace: sprint-prod
   labels:
     app: mongodb
 spec:

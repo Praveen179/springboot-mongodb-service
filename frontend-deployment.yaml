@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: frontend
-  namespace: praveen-test
+  namespace: sprint-prod
   labels:
     app: frontend
 spec:
