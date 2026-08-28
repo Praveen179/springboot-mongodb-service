@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ResourceQuota
 metadata:
   name: app-quota
-  namespace: sprint-prod
+  namespace: spring-prod
 spec:
   hard:
     requests.cpu: "1"
