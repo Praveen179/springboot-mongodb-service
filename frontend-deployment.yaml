@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: aynryand/spring-boot-mongo:1
+          image: aynryand/spring-boot-mongo:3
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080
