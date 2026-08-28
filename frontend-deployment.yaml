@@ -1,0 +1,78 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+  namespace: praveen-test
+  labels:
+    app: frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+        - name: frontend
+          image: aynryand/spring-boot-mongo:1
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+              name: http
+          env:
+            - name: SPRING_DATA_MONGODB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: SPRING_DATA_MONGODB_HOST
+            - name: SPRING_DATA_MONGODB_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: SPRING_DATA_MONGODB_PORT
+            - name: SPRING_DATA_MONGODB_DATABASE
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: SPRING_DATA_MONGODB_DATABASE
+            - name: SPRING_DATA_MONGODB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb-secret
+                  key: MONGO_INITDB_ROOT_USERNAME
+            - name: SPRING_DATA_MONGODB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb-secret
+                  key: MONGO_INITDB_ROOT_PASSWORD
+            - name: SERVER_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: SERVER_PORT
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 8080
+            initialDelaySeconds: 45
+            periodSeconds: 20
+            timeoutSeconds: 5
+            failureThreshold: 3
+          resources:
+            requests:
+              cpu: 200m
+              memory: 256Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
