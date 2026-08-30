@@ -1,0 +1,22 @@
+pipeline {
+    agent any
+    
+    environment {
+        IMAGE = "aynryand/spring-boot-mongo:1"
+    }
+
+    stages {
+        stage('deploy to k8s') {
+            steps {
+                withCredentials([
+                    file(
+                        credentialsId: 'kubeconfiginfo',
+                        variable: 'KUBECONFIG'
+                    )
+                ]) {
+                    sh "kubectl -n praveen-test set image deployment/frontend frontend=${IMAGE}"
+                }
+            }
+        }
+    }
+}
